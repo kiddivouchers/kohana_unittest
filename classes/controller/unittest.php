@@ -150,7 +150,7 @@ Class Controller_UnitTest extends Controller_Template
 		else
 		{
 			$folder = trim($this->config->cc_report_path, '/').'/';
-			$path   = DOCROOT.$folder;
+			$path   = DOCROOT.'/src/webroot/'.$folder;
 
 			if ( ! file_exists($path))
 			{
