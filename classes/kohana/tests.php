@@ -38,10 +38,10 @@ class Kohana_Tests
 	 */
 	static public function configure_environment($do_whitelist = TRUE, $do_blacklist = TRUE)
 	{
-		if ( ! class_exists('PHPUnit_Util_Filter', FALSE))
+		if ( ! class_exists('PHPUnit_Util_Filter', FALSE) && !class_exists('PHP_CodeCoverage_Filter', FALSE) && !function_exists('phpunit_autoload'))
 		{
 			// Make sure the PHPUnit classes are available
-			require_once 'PHPUnit/Framework.php';
+			@require_once 'PHPUnit/Autoload.php' or require_once 'PHPUnit/Framework.php';
 		}
 
 		if (Kohana::$is_cli)
