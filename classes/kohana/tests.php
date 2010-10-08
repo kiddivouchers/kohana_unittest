@@ -13,6 +13,8 @@ class Kohana_Tests
 {
 	static protected $cache = array();
 
+	static public $phpunit_version = '';
+
 	/**
 	 * Loads test files if they cannot be found by kohana
 	 * @param <type> $class
@@ -50,6 +52,9 @@ class Kohana_Tests
 				require_once 'PHPUnit/Framework.php';
 			}
 		}
+
+		self::$phpunit_version = PHPUnit_Runner_Version::id();
+		self::$phpunit_version = (self::$phpunit_version === '@package_version@') ? '' : self::$phpunit_version;
 
 		if (Kohana::$is_cli)
 		{
