@@ -41,7 +41,14 @@ class Kohana_Tests
 		if ( ! class_exists('PHPUnit_Util_Filter', FALSE) && !class_exists('PHP_CodeCoverage_Filter', FALSE) && !function_exists('phpunit_autoload'))
 		{
 			// Make sure the PHPUnit classes are available
-			@require_once 'PHPUnit/Autoload.php' or require_once 'PHPUnit/Framework.php';
+			try
+			{
+				require_once 'PHPUnit/Autoload.php';
+			}
+			catch (ErrrorException $e)
+			{
+				require_once 'PHPUnit/Framework.php';
+			}
 		}
 
 		if (Kohana::$is_cli)

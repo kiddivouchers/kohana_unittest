@@ -13,7 +13,14 @@ elseif (Kohana_Tests::enabled())
 	// People shouldn't be running unit tests on their production server
 	// so we assume that this _could_ be a web ui request on the dev server
 	// and include phpunit so that modules realise that this could be a testing request
-	@require_once 'PHPUnit/Autoload.php' or require_once 'PHPUnit/Framework.php';
+	try
+	{
+		require_once 'PHPUnit/Autoload.php';
+	}
+	catch (ErrrorException $e)
+	{
+		require_once 'PHPUnit/Framework.php';
+	}
 }
 
 Route::set('unittest', 'unittest(/<action>)')
