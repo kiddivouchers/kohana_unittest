@@ -77,13 +77,72 @@ class Kohana_Tests
 		{
 			foreach ($config->blacklist as $item)
 			{
-				if (is_dir($item))
+				self::_add_path_to_list('blacklist', (is_dir($item) ? 'directory' : 'file'), $item);
+			}
+		}
+	}
+
+	protected static function _add_path_to_list($list, $type, $path)
+	{
+		static $phpunit_35;
+
+		if (!isset($phpunit_35))
+		{
+			$phpunit_35 = !method_exists('PHPUnit_Util_Filter', 'addDirectoryToFilter') || version_compare(self::$phpunit_version, '3.5', '>=');
+		}
+
+		$blacklist = strtolower($list[0]) === 'b';
+		$directory = strtolower($type[0]) === 'd';
+
+		if (!$phpunit_35)
+		{
+			if ($blacklist)
+			{
+				if ($directory)
 				{
-					PHPUnit_Util_Filter::addDirectoryToFilter($item);
+					PHPUnit_Util_Filter::addDirectoryToFilter($path);
 				}
 				else
 				{
-					PHPUnit_Util_Filter::addFileToFilter($item);
+					PHPUnit_Util_Filter::addFileToFilter($path);
+				}
+			}
+			else
+			{
+				if ($directory)
+				{
+					PHPUnit_Util_Filter::addDirectoryToWhitelist($path);
+				}
+				else
+				{
+					PHPUnit_Util_Filter::addFileToWhitelist($path);
+				}
+			}
+		}
+		else
+		{
+			$filter = PHP_CodeCoverage_Filter::getInstance();
+
+			if ($blacklist)
+			{
+				if ($directory)
+				{
+					$filter->addDirectoryToBlacklist($path);
+				}
+				else
+				{
+					$filter->addFileToBlacklist($path);
+				}
+			}
+			else
+			{
+				if ($directory)
+				{
+					$filter->addDirectoryToWhitelist($path);
+				}
+				else
+				{
+					$filter->addFileToWhitelist($path);
 				}
 			}
 		}
@@ -158,7 +217,7 @@ class Kohana_Tests
 						require_once($file);
 					}
 
-					PHPUnit_Util_Filter::addFileToFilter($file);
+					self::_add_path_to_list('blacklist', 'file', $file);
 				}
 			}
 		}
@@ -266,7 +325,7 @@ class Kohana_Tests
 
 				if (Kohana_Tests::$cache[$file])
 				{
-					PHPUnit_Util_Filter::addFileToWhitelist($file);
+					self::_add_path_to_list('whitelist', 'file', $file);
 				}
 			}
 		}
