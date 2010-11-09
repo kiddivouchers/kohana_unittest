@@ -99,29 +99,4 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 	{
 		return Unittest_Helpers::has_internet();
 	}
-
-	/**
-	 * Runs a tests
-	 *
-	 * @return void
-	 */
-	public function runBare()
-	{
-		try
-		{
-			parent::runBare();
-		}
-		catch (PHPUnit_Framework_Error_Warning $e)
-		{
-			// Mark tests as skipped if the database is not available
-			if (stripos($e->getMessage(), 'mysql_connect():') === 0 && stripos($e->getMessage(), 'Access denied') !== false)
-			{
-				throw new PHPUnit_Framework_SkippedTestError('Database not available.');
-			}
-			else
-			{
-				throw $e;
-			}
-		}
-	}
 }
