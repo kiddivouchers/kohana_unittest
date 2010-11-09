@@ -123,5 +123,9 @@ Abstract Class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase
 				throw $e;
 			}
 		}
+		catch (Database_Exception $e)
+		{
+			throw new PHPUnit_Framework_SkippedTestError('Database not available.');
+		}
 	}
 }
