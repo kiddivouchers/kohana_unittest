@@ -15,11 +15,11 @@ elseif (Kohana_Tests::enabled())
 	// and include phpunit so that modules realise that this could be a testing request
 	try
 	{
-		require_once 'PHPUnit/Autoload.php';
+		include_once 'PHPUnit/Autoload.php';
 	}
 	catch (ErrrorException $e)
 	{
-		require_once 'PHPUnit/Framework.php';
+		include_once 'PHPUnit/Framework.php';
 	}
 }
 
