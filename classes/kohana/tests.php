@@ -53,6 +53,11 @@ class Kohana_Tests
 			}
 		}
 
+		if (!class_exists('PHPUnit_Runner_Version'))
+		{
+			include_once 'PHPUnit/Runner/Version.php';
+		}
+
 		self::$phpunit_version = PHPUnit_Runner_Version::id();
 		self::$phpunit_version = (self::$phpunit_version === '@package_version@') ? '' : self::$phpunit_version;
 
