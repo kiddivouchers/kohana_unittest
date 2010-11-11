@@ -270,9 +270,14 @@ Class Controller_UnitTest extends Controller_Template
 
 		$whitelist['k_app'] = 'Application';
 
-		$k_modules = array_keys(Kohana::modules());
+		$k_modules = Kohana::modules();
 
-		$whitelist += array_map('ucfirst', array_combine($k_modules, $k_modules));
+		if ($k_modules)
+		{
+			$k_modules = array_keys($k_modules);
+
+			$whitelist += array_map('ucfirst', array_combine($k_modules, $k_modules));
+		}
 
 		$whitelist['k_sys'] = 'Kohana Core';
 
