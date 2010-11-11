@@ -45,12 +45,17 @@ class Kohana_Tests
 			// Make sure the PHPUnit classes are available
 			try
 			{
-				require_once 'PHPUnit/Autoload.php';
+				include_once 'PHPUnit/Autoload.php';
 			}
-			catch (ErrrorException $e)
+			catch (ErrorException $e)
 			{
-				require_once 'PHPUnit/Framework.php';
+				include_once 'PHPUnit/Framework.php';
 			}
+		}
+
+		if (!class_exists('PHPUnit_Runner_Version'))
+		{
+			include_once 'PHPUnit/Runner/Version.php';
 		}
 
 		self::$phpunit_version = PHPUnit_Runner_Version::id();
