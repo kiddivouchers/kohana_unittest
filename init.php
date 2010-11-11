@@ -17,7 +17,7 @@ elseif (Kohana_Tests::enabled())
 	{
 		include_once 'PHPUnit/Autoload.php';
 	}
-	catch (ErrrorException $e)
+	catch (ErrorException $e)
 	{
 		include_once 'PHPUnit/Framework.php';
 	}

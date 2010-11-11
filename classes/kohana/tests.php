@@ -47,7 +47,7 @@ class Kohana_Tests
 			{
 				include_once 'PHPUnit/Autoload.php';
 			}
-			catch (ErrrorException $e)
+			catch (ErrorException $e)
 			{
 				include_once 'PHPUnit/Framework.php';
 			}
